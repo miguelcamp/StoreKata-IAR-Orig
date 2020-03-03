@@ -52,38 +52,38 @@ public class Order {
 		return items;
 	}
 
-	public float calculateTotal() {
-		float totalAllItems = 0;
+	public float total() {
+		float totalItems = 0;
 		for (OrderItem item : items) {
-			float totalPerItem=0;
+			float totalItem=0;
 			float itemAmount = item.getProduct().getUnitPrice() * item.getQuantity();
 			if (item.getProduct().getCategory() == ProductCategory.Accessories) {
 				float booksDiscount = 0;
 				if (itemAmount >= 100) {
 					booksDiscount = itemAmount * 10 / 100;
 				}
-				totalPerItem = itemAmount - booksDiscount;
+				totalItem = itemAmount - booksDiscount;
 			}
 			if (item.getProduct().getCategory() == ProductCategory.Bikes) {
 				// 20% discount for Bikes
-				totalPerItem = itemAmount - itemAmount * 20 / 100;
+				totalItem = itemAmount - itemAmount * 20 / 100;
 			}
-			if (item.getProduct().getCategory() == ProductCategory.Clothing) {
+			if (item.getProduct().getCategory() == ProductCategory.Cloathing) {
 				float cloathingDiscount = 0;
 				if (item.getQuantity() > 2) {
 					cloathingDiscount = item.getProduct().getUnitPrice();
 				}
-				totalPerItem = itemAmount - cloathingDiscount;
+				totalItem = itemAmount - cloathingDiscount;
 			}
-			totalAllItems += totalPerItem;
+			totalItems += totalItem;
 		}
 
 		if (this.deliveryCountry == "USA"){
 			// total=totalItems + tax + 0 shipping
-			return totalAllItems + totalAllItems * 5 / 100;
+			return totalItems + totalItems * 5 / 100;
 		}
 
 		// total=totalItemst + tax + 15 shipping
-		return totalAllItems + totalAllItems * 5 / 100 + 15;
+		return totalItems + totalItems * 5 / 100 + 15;
 	}
 }

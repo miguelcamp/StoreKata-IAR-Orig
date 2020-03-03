@@ -31,7 +31,7 @@ public class OrderTest {
 		OrderItem orderItem = createOrderItem(50, ProductCategory.Accessories, 2);
 		addItemToOrder(order, orderItem);
 
-		float total = order.calculateTotal();
+		float total = order.total();
 
 		assertEquals(94.5, total, 1);
 	}
@@ -42,7 +42,7 @@ public class OrderTest {
 		OrderItem orderItem = createOrderItem(200, ProductCategory.Bikes, 2);
 		addItemToOrder(order, orderItem);
 
-		float total = order.calculateTotal();
+		float total = order.total();
 
 		assertEquals(336, total, 0);
 	}
@@ -50,10 +50,10 @@ public class OrderTest {
 	@Test
 	public void returnTheTotalWithCloathingDiscount() {
 		Order order = createOrder("USA");
-		OrderItem orderItem = createOrderItem(100, ProductCategory.Clothing, 3);
+		OrderItem orderItem = createOrderItem(100, ProductCategory.Cloathing, 3);
 		addItemToOrder(order, orderItem);
 
-		float total = order.calculateTotal();
+		float total = order.total();
 
 		assertEquals(210, total, 0);
 	}
@@ -62,7 +62,7 @@ public class OrderTest {
 	public void returnTheTotalWithShippingCostWhenDeliveryCountryIsOutsideUSA() {
 		Order order = createOrder("Peru");
 
-		float total = order.calculateTotal();
+		float total = order.total();
 
 		assertEquals(15, total, 0);
 	}
