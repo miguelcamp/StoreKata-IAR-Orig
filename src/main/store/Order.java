@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class Order {
 
+	private static final int _MIN_FOR_CLOTHING_DISCOUNT = 2;
+	private static final int _MIN_FOR_ACC_DISCOUNT = 100;
 	private static final int _SHIPPING_COST = 15;
 	private Customer customer;
 	private Salesman salesman;
@@ -84,7 +86,7 @@ public class Order {
 	private float calculateDiscount(OrderItem item, float totalPerItem, float itemAmount) {
 		if (isAccessories(item)) {
 			float accesoriesDiscount = 0;
-			if (itemAmount >= 100) {
+			if (itemAmount >= _MIN_FOR_ACC_DISCOUNT) {
 				accesoriesDiscount = itemAmount * 10 / 100;
 			}
 			totalPerItem = itemAmount - accesoriesDiscount;
@@ -95,7 +97,7 @@ public class Order {
 		}
 		if (isClothing(item)) {
 			float cloathingDiscount = 0;
-			if (item.getQuantity() > 2) {
+			if (item.getQuantity() > _MIN_FOR_CLOTHING_DISCOUNT) {
 				cloathingDiscount = item.getProduct().getUnitPrice();
 			}
 			totalPerItem = itemAmount - cloathingDiscount;
