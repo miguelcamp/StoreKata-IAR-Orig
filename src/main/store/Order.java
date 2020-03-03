@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Order {
 
+	private static final int _SHIPPING_COST = 15;
 	private Customer customer;
 	private Salesman salesman;
 	private Date orderedOn;
@@ -53,9 +54,24 @@ public class Order {
 	}
 
 	public float calculateTotal() {
-		float totalAllItems = 0;
+		float baseTotal = 0;
 		float tax=0;
 		float shipping=0;
+		baseTotal = calculateBaseTotal(baseTotal);
+		tax = calculateTax(baseTotal);
+		shipping = calculateShipping();
+		return baseTotal + tax + shipping;
+	}
+
+	private float calculateShipping() {
+		float shipping;
+		shipping = _SHIPPING_COST;
+		if (countryIsUSA())// shipping free
+			shipping=0;
+		return shipping;
+	}
+
+	private float calculateBaseTotal(float totalAllItems) {
 		for (OrderItem item : items) {
 			float totalPerItem=0;
 			float itemAmount = item.getProduct().getUnitPrice() * item.getQuantity();
@@ -79,14 +95,7 @@ public class Order {
 			}
 			totalAllItems += totalPerItem;
 		}
-		tax = calculateTax(totalAllItems);
-		shipping = 15;
-		if (countryIsUSA()){
-			// total=totalItems + tax + 0 shipping
-			shipping=0;
-		}
-		// total=totalItemst + tax + 15 shipping
-		return totalAllItems + tax + shipping;
+		return totalAllItems;
 	}
 
 	private boolean countryIsUSA() {
