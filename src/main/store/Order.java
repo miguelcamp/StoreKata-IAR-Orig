@@ -6,8 +6,6 @@ import java.util.Set;
 
 public class Order {
 
-	private static final int _ACCESSORY_DISCOUNT = 10;
-	private static final int _BIKE_DISCOUNT = 20;
 	private static final int _SHIPPING_COST = 15;
 	private Customer customer;
 	private Salesman salesman;
@@ -80,46 +78,9 @@ public class Order {
 	private float calculateTotalForItems() {
 		float totalItems=0;
 		for (OrderItem item : items) {
-			float totalPerItem = calculateItemTotal(item);
+			float totalPerItem = item.calculateTotalForItem();
 			totalItems += totalPerItem;
 		}
 		return totalItems;
-	}
-
-	private float calculateBaseAmountPerItem(OrderItem item) {
-		return item.getProduct().getUnitPrice() * item.getQuantity();
-	}
-
-	private float calculateItemTotal(OrderItem item) {
-		float itemAmount = calculateBaseAmountPerItem(item);
-		itemAmount -= calculateDiscount(item, itemAmount);
-		return itemAmount;
-	}
-
-	private float calculateDiscount(OrderItem item, float itemAmount) {
-		float discount = 0;
-		if (isAccessory(item) && itemAmount >= 100) 
-				discount = calculatePercentageDiscount(itemAmount, _ACCESSORY_DISCOUNT);
-		if (isBike(item))
-			discount = calculatePercentageDiscount(itemAmount, _BIKE_DISCOUNT);
-		if (isClothing(item) && item.getQuantity() > 2) 
-			discount = item.getProduct().getUnitPrice();
-		return discount;
-	}
-
-	private float calculatePercentageDiscount(float itemAmount, int percentage) {
-		return itemAmount * percentage / 100;
-	}
-
-	private boolean isClothing(OrderItem item) {
-		return item.getProduct().getCategory() == ProductCategory.Clothing;
-	}
-
-	private boolean isBike(OrderItem item) {
-		return item.getProduct().getCategory() == ProductCategory.Bikes;
-	}
-
-	private boolean isAccessory(OrderItem item) {
-		return item.getProduct().getCategory() == ProductCategory.Accessories;
 	}
 }

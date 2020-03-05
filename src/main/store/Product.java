@@ -52,4 +52,17 @@ public class Product {
 		return "<product>" + "<name>" + name + "</name>" + "<category>"
 				+ category + "</category>" + "</product>";
 	}
+
+	boolean isAccessory() {
+		return getCategory() == ProductCategory.Accessories;
+	}
+
+	boolean isClothing() {
+		return getCategory() == ProductCategory.Clothing;
+	}
+
+	boolean isBike() {
+		return getCategory() == ProductCategory.Bikes;
+	}
+
 }
