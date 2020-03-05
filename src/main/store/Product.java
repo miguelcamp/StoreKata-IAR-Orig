@@ -65,4 +65,19 @@ public class Product {
 		return getCategory() == ProductCategory.Bikes;
 	}
 
+	DiscountCalculator createDiscountCalculator(){
+		DiscountCalculator discountCalculator = null;
+		if(isAccessory()){
+			discountCalculator = new AccessoriesDiscount();
+		}
+		if (isBike()) {
+			discountCalculator = new BikesDiscount();
+		}
+		if (isClothing()) {
+			discountCalculator = new ClothingDiscount();
+		}
+		
+		return discountCalculator;
+	}
+
 }

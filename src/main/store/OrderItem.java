@@ -24,29 +24,13 @@ public class OrderItem {
 	float calculateTotalForItem() {
 		float itemAmount = calculateBaseAmountPerItem();
 		float discount=0;
-		DiscountCalculator discountCalculator = createDiscountCalculator();
+		DiscountCalculator discountCalculator = product.createDiscountCalculator();
 		discount = discountCalculator.calculateDiscount(itemAmount, this);
 		return itemAmount - discount;
 	}
 
 	float calculateBaseAmountPerItem() {
 		return getProduct().getUnitPrice() * getQuantity();
-	}
-
-
-	private DiscountCalculator createDiscountCalculator(){
-		DiscountCalculator discountCalculator = null;
-		if(getProduct().isAccessory()){
-			discountCalculator = new AccessoriesDiscount();
-		}
-		if (getProduct().isBike()) {
-			discountCalculator = new BikesDiscount();
-		}
-		if (getProduct().isClothing()) {
-			discountCalculator = new ClothingDiscount();
-		}
-		
-		return discountCalculator;
 	}
 	
 	
